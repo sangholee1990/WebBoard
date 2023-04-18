@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<total>
+	<personal id="A1">
+		<name>박지성</name>
+		<phone>010-1234-1111</phone>
+		<addr>영국 맨체스터</addr>
+	</personal>
+
+	<personal id="B1">
+		<name>박주영</name>
+		<phone>011-1222-12</phone>
+		<addr>프랑스 모나코</addr>
+	</personal>
+
+	<personal id="C1">
+		<name>이청용</name>
+		<phone>010-2231-3121</phone>
+		<addr>영국 볼튼</addr>
+	</personal>
+</total>
+
+

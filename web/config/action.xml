@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-mapping>
+	<action urlName="/list.do"     className="controller.ListAction"     path="/view/list.jsp" />
+	<action urlName="/jstl/list.do" className="controller.ListAction"    path="/view/jstl/list.jsp" />
+	<action urlName="/ajax/list.do" className="controller.ListAction"    path="/view/ajax/list.jsp" />
+
+	<action urlName="/content.do"  className="controller.ContentAction"  path="/view/content.jsp" />
+	<action urlName="/insert.do"   className="controller.InsertAction"   path="/view/insert.jsp" />
+	<action urlName="/insertOk.do" className="controller.InsertOkAction" path="/view/list.jsp" />
+	<action urlName="/delete.do"   className="controller.DeleteAction"   path="/view/delete.jsp" />
+	<action urlName="/deleteOk.do" className="controller.DeleteOkAction" />
+	<action urlName="/update.do"   className="controller.UpdateAction"   path="/view/update.jsp" />
+	<action urlName="/updateOk.do" className="controller.UpdateOkAction" path="/view/update.jsp" />
+</action-mapping>
