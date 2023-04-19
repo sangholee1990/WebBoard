@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action-mapping>
-	<action urlName="/list.do"     className="controller.ListAction"     path="/view/list.jsp" />
+
+<!--JAVA 데이터 전달-->
+	<action urlName="/java/list.do" className="controller.ListAction"    path="/view/java/list.jsp" />
+	<action urlName="/java/content.do"  className="controller.ContentAction"  path="/view/java/content.jsp" />
+	<action urlName="/java/insert.do"   className="controller.InsertAction"   path="/view/java/insert.jsp" />
+	<action urlName="/java/insertOk.do" className="controller.InsertOkAction" path="/view/java/list.jsp" />
+	<action urlName="/java/delete.do"   className="controller.DeleteAction"   path="/view/java/delete.jsp" />
+	<action urlName="/java/update.do"   className="controller.UpdateAction"   path="/view/java/update.jsp" />
+<!--	<action urlName="/java/deleteOk.do" className="controller.DeleteOkAction" />-->
+	<action urlName="/java/updateOk.do" className="controller.UpdateOkAction" path="/view/java/update.jsp" />
+
+<!--JSTL 데이터 전달-->
 	<action urlName="/jstl/list.do" className="controller.ListAction"    path="/view/jstl/list.jsp" />
+
+<!--AJAX 데이터 전달-->
 	<action urlName="/ajax/list.do" className="controller.ListAction"    path="/view/ajax/list.jsp" />
 
-	<action urlName="/content.do"  className="controller.ContentAction"  path="/view/content.jsp" />
-	<action urlName="/insert.do"   className="controller.InsertAction"   path="/view/insert.jsp" />
-	<action urlName="/insertOk.do" className="controller.InsertOkAction" path="/view/list.jsp" />
-	<action urlName="/delete.do"   className="controller.DeleteAction"   path="/view/delete.jsp" />
-	<action urlName="/deleteOk.do" className="controller.DeleteOkAction" />
-	<action urlName="/update.do"   className="controller.UpdateAction"   path="/view/update.jsp" />
-	<action urlName="/updateOk.do" className="controller.UpdateOkAction" path="/view/update.jsp" />
+
 </action-mapping>

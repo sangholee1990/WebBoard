@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,34 +35,11 @@ public class BoardController extends HttpServlet {
 
     private final static Logger log = Logger.getGlobal();
 
-    // 테스트
-    public static void main(String[] args) {
-        String configInfo = System.getProperty("user.dir") + File.separator + "src/config/action.xml";
-        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
-
-//        configInfo = this.getClass().getResource("/")
-        configInfo = BoardController.class.getResource(".").getPath();
-        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
-
-        configInfo = BoardController.class.getResource("/").getPath();
-        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
-
-//        configInfo = System.getProperty("java.class.path") + File.separator + "src/config/action.xml";
-//        configInfo = System.getProperty("java.class.path");
-//        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
-
-//        InputStream inStream = BoardFrontController.getClassLoader().getResourceAsStream("Web-INF/web.xml");
-//        System.out.println(inStream);
-//        String path = HttpServletRequest.getSession().getServletContext().getRealPath("/WEF-INF");
-
+    @PostConstruct
+    public void postConstruct() {
+        System.out.println(String.format("[START] 서블릿 컨테이너 : %s", " postConstruct"));
     }
 
-
-    /**
-     * 요청 파라미터 설정
-     *
-     * @throws ServletException
-     */
     @Override
     public void init() throws ServletException {
         super.init();
@@ -173,10 +152,10 @@ public class BoardController extends HttpServlet {
         }
     }
 
-    protected void destory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(String.format("[END] 서블릿 컨테이너 : %s", "destory"));
+    @PreDestroy
+    public void preDestroy() {
+        System.out.println(String.format("[END] 서블릿 컨테이너 : %s", " preDestroy"));
     }
-
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -205,4 +184,27 @@ public class BoardController extends HttpServlet {
         //TRACE 메서드는 목적 리소스의 경로를 따라 메시지 loop-back 테스트
         System.out.println(String.format("[END] 서블릿 컨테이너 : %s", "doTrace"));
     }
+
+
+    // 테스트
+//    public static void main(String[] args) {
+//        String configInfo = System.getProperty("user.dir") + File.separator + "src/config/action.xml";
+//        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
+//
+////        configInfo = this.getClass().getResource("/")
+//        configInfo = BoardController.class.getResource(".").getPath();
+//        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
+//
+//        configInfo = BoardController.class.getResource("/").getPath();
+//        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
+//
+////        configInfo = System.getProperty("java.class.path") + File.separator + "src/config/action.xml";
+////        configInfo = System.getProperty("java.class.path");
+////        System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
+//
+////        InputStream inStream = BoardFrontController.getClassLoader().getResourceAsStream("Web-INF/web.xml");
+////        System.out.println(inStream);
+////        String path = HttpServletRequest.getSession().getServletContext().getRealPath("/WEF-INF");
+//
+//    }
 }

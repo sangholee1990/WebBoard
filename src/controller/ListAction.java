@@ -25,7 +25,6 @@ public class ListAction implements Action {
 		Map<String, Object> requestParameterMap = BoardService.requestParameterMap(request);
 
 		List<BoardVO> boardList = dao.boardSelect(requestParameterMap);
-		
 		request.setAttribute("boardList", boardList);
 	}
 }

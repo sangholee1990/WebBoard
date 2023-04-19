@@ -1,7 +1,13 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"
-        isThreadSafe="true" %>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+        pageEncoding="UTF-8" isELIgnored="false" isThreadSafe="true"
+        import="java.util.*, javax.servlet.http.*, model.*" %>
 
 <%@ include file="/view/template/taglib.jsp" %>
+
+<%
+    BoardDAO dao = new BoardDAO();
+    List<BoardVO> boardList = (List<BoardVO>) request.getAttribute("boardList");
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -42,9 +48,10 @@
                 </div>
 
                 <span class="text-end">
-                    <a>총 게시물 수: ${fn:length(boardList)}개</a>
+                    <a>총 게시물 수: <%=boardList.size()%>개</a>
                 </span>
 
+                <%-- 주요 내용 --%>
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
@@ -54,31 +61,39 @@
                         <th>등록일</th>
                     </tr>
                     </thead>
+
                     <tbody>
-                    <c:if test="${not empty boardList}">
-                        <c:forEach items="${boardList}" var="boardAttr">
-                            <tr>
-                                <td>${boardAttr.bno}</td>
-                                <td>
-                                    <a href="/content.do?bno=${boardAttr.bno}">
-                                        <c:out value="${boardAttr.btitle}" default="제목 없음"/>
-                                    </a>
-                                </td>
-                                <td>${boardAttr.bhit}</td>
-                                <td>${boardAttr.bdate}</td>
-                            </tr>
-                        </c:forEach>
-                    </c:if>
-                    <c:if test="${empty boardList}">
-                        <tr>
-                            <td colspan="4">목록이 없습니다!</td>
-                        </tr>
-                    </c:if>
+                    <%
+                        if ((boardList != null) && (boardList.size() > 0)) {
+                            for (BoardVO boardAttr : boardList) {
+                    %>
+                    <tr>
+                        <td><%=boardAttr.getBno()%>
+                        </td>
+                        <td>
+                            <a href="/content.do?bno=<%=boardAttr.getBno()%>"><%=BoardService.nullCheck(boardAttr.getBtitle(), "no title")%>
+                            </a></td>
+                        <td><%=boardAttr.getBhit()%>
+                        </td>
+                        <td><%=boardAttr.getBdate()%>
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <tr>
+                        <td colspan="4">목록이 없습니다!</td>
+                    </tr>
+                    <%
+                        }
+                    %>
                     </tbody>
+
                     <tfoot>
                     <tr>
                         <td colspan="4">
-                            <input type="button" class="btn btn-primary float-end" value="등록"
+                            <input type="button" value="등록" class="btn btn-primary float-end"
                                    onclick="location='/insert.do';"/>
                         </td>
                     </tr>
@@ -108,6 +123,9 @@
             </div>
         </div>
     </div>
-</div>
+    <%-- 제이쿼리 --%>
+    <%--    <div id="pagination"></div>--%>
+
 </body>
+
 </html>

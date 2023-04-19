@@ -116,6 +116,10 @@ public abstract class BaseDAO<T> {
 //          커밋
             con.commit();
 
+            System.out.println(String.format("[CHECK] query : %s", query));
+            System.out.println(String.format("[CHECK] params : %s", params));
+            System.out.println(String.format("[CHECK] result : %s", result));
+
         } catch (SQLException e) {
             System.out.println(String.format("[ERROR] SQLException: 코드 %s : 상태 %s : 메시지 %s", e.getErrorCode(), e.getSQLState(), e.getMessage()));
             rollback(con);
@@ -163,6 +167,10 @@ public abstract class BaseDAO<T> {
                 T vo = setVoResult(rs);
                 select.add(vo);
             }
+
+            System.out.println(String.format("[CHECK] query : %s", query));
+            System.out.println(String.format("[CHECK] params : %s", params));
+            System.out.println(String.format("[CHECK] select : %s", select));
         } catch (SQLException e) {
             System.out.println(String.format("[ERROR] SQLException: 코드 %s : 상태 %s : 메시지 %s", e.getErrorCode(), e.getSQLState(), e.getMessage()));
             throw new RuntimeException(ERROR_MSG);
@@ -206,6 +214,10 @@ public abstract class BaseDAO<T> {
             while (rs.next()) {
                 vo = setVoResult(rs);
             }
+            System.out.println(String.format("[CHECK] query : %s", query));
+            System.out.println(String.format("[CHECK] params : %s", params));
+            System.out.println(String.format("[CHECK] vo : %s", vo));
+
         } catch (SQLException e) {
             System.out.println(String.format("[ERROR] SQLException: 코드 %s : 상태 %s : 메시지 %s", e.getErrorCode(), e.getSQLState(), e.getMessage()));
             throw new RuntimeException(ERROR_MSG);

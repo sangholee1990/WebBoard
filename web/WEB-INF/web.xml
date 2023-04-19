@@ -12,7 +12,6 @@
         <welcome-file>index.jsp</welcome-file>
         <welcome-file>default.html</welcome-file>
         <welcome-file>default.htm</welcome-file>
-        <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- @WebServlet(name = "BoardFrontController", urlPatterns = "*.do") 동일 -->
