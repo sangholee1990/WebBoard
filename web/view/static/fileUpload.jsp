@@ -21,7 +21,7 @@
                     progressLabel.text("진행률 : " + progressBar.progressbar("value") + "%");
                 },
                 complete: function () {
-                    progressLabel.text("Complete!");
+                    progressLabel.text("완료");
                     $(".ui-dialog button").last().trigger("focus");
                 }
             });
@@ -29,8 +29,20 @@
             $('form').ajaxForm({
                 url: "/json/fileUpload.do",
                 type: "POST",
-                beforeSubmit: function (arr, $form, options) {
-                    progressBar.progressbar("value", 0);
+                beforeSubmit: function (formData, jqForm, options) {
+
+                    var files = $('#upload-file')[0].files;
+                    if (files.length < 1) return false;
+
+                    var formData = new FormData();
+
+                    Array.from(files).forEach(function (file) {
+                        formData.append('files[]', file);
+                    });
+
+                    options.data = formData;
+
+                    return true;
                 },
                 uploadProgress: function (event, position, total, percentComplete) {
                     progressBar.progressbar("value", percentComplete);
@@ -57,18 +69,30 @@
         <div class="col-md-9">
             <div class="card">
                 <form id="upload-form" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="upload-file" class="form-label">파일 업로드</label>
-                        <input type="file" class="form-control" id="upload-file" name="data">
+                    <div class="mb-3 text-center fw-bold">
+                        <label for="upload-file" class="form-label">단일/다중 파일 업로드</label>
+                        <input type="file" class="form-control" id="upload-file" name="data[]" multiple>
                     </div>
                     <div class="progress-label"></div>
                     <div id="progress-bar"></div>
 
                     <br>
-                    <button type="submit" class="btn btn-primary">업로드</button>
+                    <button type="submit" class="btn btn-primary float-end">업로드</button>
                 </form>
 
-
+<%--                <table id="dg" title="Files" class="easyui-datagrid" style="width:700px;height:250px"--%>
+<%--                       url="get_files.jsp"--%>
+<%--                       toolbar="#toolbar" pagination="true"--%>
+<%--                       rownumbers="true" fitColumns="true" singleSelect="true">--%>
+<%--                    <thead>--%>
+<%--                    <tr>--%>
+<%--                        <th field="name" width="50">File Name</th>--%>
+<%--                        <th field="size" width="50">Size</th>--%>
+<%--                        <th field="date" width="50">Upload Date</th>--%>
+<%--                        <th field="action" width="50" formatter="formatActions">Actions</th>--%>
+<%--                    </tr>--%>
+<%--                    </thead>--%>
+<%--                </table>--%>
             </div>
         </div>
     </div>

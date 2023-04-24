@@ -8,5 +8,11 @@
             <li class="list-group-item"><a href="/jstl/list.do">JSTL</a></li>
             <li class="list-group-item"><a href="/ajax/list.do">AJAX</a></li>
         </ul>
+
+        <div class="card-header">파일 객체</div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="/static/fileUpload.do">업로드</a></li>
+            <li class="list-group-item"><a href="/static/fileDown.do">다운로드</a></li>
+        </ul>
     </div>
 </div>

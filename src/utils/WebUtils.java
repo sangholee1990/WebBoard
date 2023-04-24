@@ -17,6 +17,25 @@ import controller.ActionForward;
 
 public class WebUtils {
 
+    public static void main(String[] args) {
+        Map<String, Object> mapData = new HashMap<>();
+
+        mapData.put("error", "오류 발생");
+
+        //
+        Gson gson = new Gson();
+        System.out.println(mapData);
+        System.out.println(gson.toJson(mapData));
+
+//        response.setContentType("application/json");
+
+//        try (PrintWriter out = response.getWriter()) {
+//            String json = gson.toJson(mapData).toString();
+//            out.print(gson.toJson(mapData));
+//        }
+
+    }
+
     public static void writeResponse(HttpServletRequest request, HttpServletResponse response) {
 
         response.setContentType("application/json; charset=UTF-8");
@@ -48,11 +67,11 @@ public class WebUtils {
 
 
     public static void handleError(HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> mapData = new HashMap<>();
-
         try {
-            mapData.put("error", "오류 발생");
-            WebUtils.writeJsonResponse(response, mapData);
+//            Map<String, Object> mapData = new HashMap<>();
+//            mapData.put("error", "오류 발생");
+//            WebUtils.writeJsonResponse(response, mapData);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "오류 발생");
         } catch (IOException ioe) {
             System.out.println(String.format("[ERROR] IOException : %s", ioe.getMessage()));
         } catch (Exception e) {
@@ -86,7 +105,10 @@ public class WebUtils {
     }
 
     public static void writeJsonResponse(HttpServletResponse response, Map<String, Object> mapData) throws IOException {
+
         Gson gson = new Gson();
+        response.setContentType("application/json");
+
         try (PrintWriter out = response.getWriter()) {
             out.print(gson.toJson(mapData));
         }

@@ -3,9 +3,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>404 page</title>
+    <title>error page</title>
 </head>
 <body>
-페이지가 존재하지 않습니다.
+오류가 발생했습니다. 관리자에게 문의해주세요.
 </body>
 </html>

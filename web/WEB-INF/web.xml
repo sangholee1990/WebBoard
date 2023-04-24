@@ -40,7 +40,7 @@
         <location>/errorPage/error500.jsp</location>
     </error-page>
 
-    <!-- 자바 네임과 디렉터리 인터페이스 (JDNI)를 통해 데이터/객체 API -->
+<!--     자바 네임과 디렉터리 인터페이스 (JDNI)를 통해 데이터/객체 API -->
     <resource-ref>
         <description>MysqlDB Resource</description>
         <res-ref-name>jdbc/mysql</res-ref-name>
