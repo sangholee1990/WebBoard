@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action-mapping>
 
-<!--JAVA 데이터 전달-->
-	<action urlName="/java/list.do" className="controller.ListAction"    path="/view/java/list.jsp" />
-	<action urlName="/java/content.do"  className="controller.ContentAction"  path="/view/java/content.jsp" />
-	<action urlName="/java/insert.do"   className="controller.InsertAction"   path="/view/java/insert.jsp" />
-	<action urlName="/java/insertOk.do" className="controller.InsertOkAction" path="/view/java/list.jsp" />
-	<action urlName="/java/delete.do"   className="controller.DeleteAction"   path="/view/java/delete.jsp" />
-	<action urlName="/java/update.do"   className="controller.UpdateAction"   path="/view/java/update.jsp" />
-<!--	<action urlName="/java/deleteOk.do" className="controller.DeleteOkAction" />-->
-	<action urlName="/java/updateOk.do" className="controller.UpdateOkAction" path="/view/java/update.jsp" />
+    <!--JAVA 데이터 전달-->
+    <action title="목록" urlName="/java/list.do" className="action.ListAction" path="/view/java/list.jsp"/>
+    <action title="세부" urlName="/java/content.do" className="action.ContentAction" path="/view/java/content.jsp"/>
+    <action title="등록" urlName="/java/insert.do" className="action.InsertAction" path="/view/java/insert.jsp"/>
+    <action title="등록완료" urlName="/java/insertOk.do" className="action.InsertOkAction" path="/view/java/list.jsp"/>
+    <action title="수정" urlName="/java/delete.do" className="action.DeleteAction" path="/view/java/delete.jsp"/>
+    <action title="삭제" urlName="/java/update.do" className="action.UpdateAction" path="/view/java/update.jsp"/>
+    <!--	<action urlName="/java/deleteOk.do" className="action.DeleteOkAction" />-->
+    <action title="삭제완료" urlName="/java/updateOk.do" className="action.UpdateOkAction" path="/view/java/update.jsp"/>
 
-<!--JSTL 데이터 전달-->
-	<action urlName="/jstl/list.do" className="controller.ListAction"    path="/view/jstl/list.jsp" />
+    <!--JSTL 데이터 전달-->
+    <action title="목록" urlName="/jstl/list.do" className="action.ListAction" path="/view/jstl/list.jsp"/>
 
-<!--AJAX 데이터 전달-->
-	<action urlName="/ajax/list.do" className="controller.ListAction"    path="/view/ajax/list.jsp" />
+    <!--AJAX 데이터 전달-->
+<!--    <action title="목록" urlName="/ajax/list.do" className="action.ListAction" path="/view/ajax/list.jsp"/>-->
+    <action title="목록" urlName="/json/list.do" className="action.ListAction" path="/view/json/list.jsp"/>
+    <action title="목록" urlName="/ajax/list.do" className="action.ListAction" path="/view/ajax/list.jsp" isRedirect="true"/>
 
+<!--    파일 업로드 -->
+    <action title="파일 업로드" urlName="/static/fileUpload.do" className="action.ListAction" path="/view/static/fileUpload.jsp" isRedirect="true"/>
+    <action title="파일 업로드" urlName="/json/fileUpload.do" className="action.FileUploadAction" path="/view/static/fileUpload.jsp" isRedirect="false"/>
 
 </action-mapping>

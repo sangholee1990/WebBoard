@@ -71,7 +71,7 @@
                         <td><%=boardAttr.getBno()%>
                         </td>
                         <td>
-                            <a href="/content.do?bno=<%=boardAttr.getBno()%>"><%=BoardService.nullCheck(boardAttr.getBtitle(), "no title")%>
+                            <a href="/java/content.do?bno=<%=boardAttr.getBno()%>"><%=BoardService.nullCheck(boardAttr.getBtitle(), "no title")%>
                             </a></td>
                         <td><%=boardAttr.getBhit()%>
                         </td>
@@ -94,7 +94,7 @@
                     <tr>
                         <td colspan="4">
                             <input type="button" value="등록" class="btn btn-primary float-end"
-                                   onclick="location='/insert.do';"/>
+                                   onclick="location='/java/insert.do';"/>
                         </td>
                     </tr>
                     </tfoot>

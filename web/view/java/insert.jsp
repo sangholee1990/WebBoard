@@ -29,7 +29,7 @@
                 <div class="form-group text-center">
                     <input type="button" value="등록" id="insertBtn" class="btn btn-primary"/>
                     <input type="button" value="삭제" class="btn btn-danger" id="resetBtn"/>
-                    <a href="/list.do" class="btn btn-outline-secondary">목록</a>
+                    <a href="/java/list.do" class="btn btn-outline-secondary">목록</a>
                 </div>
             </form>
         </div>

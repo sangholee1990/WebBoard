@@ -65,9 +65,9 @@
                         </tbody>
                     </table>
                     <div class="btn-group" role="group">
-                        <a class="btn btn-outline-secondary" href="/list.do">목록</a>
+                        <a class="btn btn-outline-secondary" href="/java/list.do">목록</a>
                         <a class="btn btn-danger" id="deleteBtn">삭제</a>
-                        <a class="btn btn-primary" href="/update.do?bno=<%=boardAttr.getBno()%>">수정</a>
+                        <a class="btn btn-primary" href="/java/update.do?bno=<%=boardAttr.getBno()%>">수정</a>
                     </div>
                 </div>
             </div>

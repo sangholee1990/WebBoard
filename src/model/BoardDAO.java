@@ -76,6 +76,7 @@ public class BoardDAO extends BaseDAO<BoardVO> {
         params.add(requestParameterMap.get("bdate"));
 
         boardSelect = select(query, params);
+
         return boardSelect;
     }
 
@@ -157,8 +158,3 @@ public class BoardDAO extends BaseDAO<BoardVO> {
         return result;
     }
 }
-
-
-
-
-

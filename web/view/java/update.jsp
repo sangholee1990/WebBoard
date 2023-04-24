@@ -36,7 +36,7 @@
 
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary">수정</button>
-            <a href="/list.do" class="btn btn-secondary">목록</a>
+            <a href="/java/list.do" class="btn btn-secondary">목록</a>
         </div>
     </form>
 </div>

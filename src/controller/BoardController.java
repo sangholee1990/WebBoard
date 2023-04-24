@@ -1,13 +1,11 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import utils.WebUtils;
-import utils.XMLUtils;
-
-import java.util.logging.Logger;
+import utils.XmlUtils;
 
 /**
  * 서블릿 컨테이너
@@ -33,8 +29,6 @@ public class BoardController extends HttpServlet {
 
     private static Map<String, ActionForward> actionRequestMapping = new Hashtable<String, ActionForward>();
 
-    private final static Logger log = Logger.getGlobal();
-
     @PostConstruct
     public void postConstruct() {
         System.out.println(String.format("[START] 서블릿 컨테이너 : %s", " postConstruct"));
@@ -46,18 +40,12 @@ public class BoardController extends HttpServlet {
 
         System.out.println(String.format("[START] 서블릿 컨테이너 : %s", " init"));
 
-
         try {
-
-            // XML 설정 파일을 이용하여 읽기
-//            String configInfo = "E:/SYSTEMS/dev/workspace/01.CodeReview/WebsiteBoard/web/config/action.xml";
-
             // 웹 어플리케이션 최상단 배포 위치
-            // C:\dev\workspace\01.CodeReview\WebBoard\classes\artifacts\websiteBoard_war_exploded
             String configInfo = getServletContext().getRealPath("config/action.xml");
             System.out.println(String.format("[CHECK] configInfo : %s", configInfo));
 
-            Map<String, ActionForward> mapping = XMLUtils.parseActionXml(configInfo);
+            Map<String, ActionForward> mapping = XmlUtils.parseActionXml(configInfo);
             System.out.println(String.format("[CHECK] mapping : %s", mapping));
 
             actionRequestMapping.putAll(mapping);
@@ -70,15 +58,6 @@ public class BoardController extends HttpServlet {
             System.out.println(String.format("[END] 서블릿 컨테이너 : %s", "init"));
         }
     }
-
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        System.out.println(String.format("[END] 서블릿 컨테이너 : %s", "doGet"));
-//    }
-//
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        System.out.println(String.format("[END] 서블릿 컨테이너 : %s", "doPost"));
-//    }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -94,59 +73,34 @@ public class BoardController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // /list.do
-        String RequestURI = request.getRequestURI();
-//        System.out.println(String.format("[CHECK] RequestURI : %s", RequestURI));
-
-        // root
-        String contextPath = request.getContextPath();
-//        System.out.println(String.format("[CHECK] contextPath : %s", contextPath));
-
-        // /list.do
-        String command = RequestURI.substring(contextPath.length());
+        String command = WebUtils.getRequestCommand(request);
         System.out.println(String.format("[CHECK] command : %s", command));
 
         try {
             // urlName (command)으로부터 className, path에 대한 설정 정보 가져오기
-            ActionForward actinInfo = actionRequestMapping.get(command);
-            System.out.println(String.format("[CHECK] actinInfo : %s", actinInfo));
+            ActionForward actionInfo = actionRequestMapping.get(command);
+            System.out.println(String.format("[CHECK] actionInfo : %s", actionInfo));
 
-            if (actinInfo == null) {
+            if (actionInfo == null) {
                 throw new Exception("action 정보가 없습니다.");
             }
 
-            try {
-                // className에 대한 객체 생성
-                Class<?> ClassName = Class.forName(actinInfo.getClassName());
-
-                // 객체화한 클래스는 Object형이다. 그러므로 강제 다운캐스팅해야 한다.
-                action = (Action) ClassName.newInstance();
-
-                // 오버라이딩한 execute() 호출
-                action.execute(request, response, actinInfo);
-
-            } catch (RuntimeException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                System.out.println(String.format("[ERROR] RuntimeException | ClassNotFoundException | InstantiationException | IllegalAccessException : %s", e.getMessage()));
-                WebUtils.writeResponse(response, "오류 발생");
+            if (!actionInfo.isRedirect()) {
+                action = WebUtils.createActionInstance(actionInfo);
+                action.execute(request, response, actionInfo);
             }
 
-            // 비동기 Ajax에서 데이터 결과를 servlet에서 응답 처리
-            if (actinInfo.getReturnData() != null) {
-                WebUtils.writeResponse(response, actinInfo.getReturnData());
-                return;
-            }
+            // 제목 제공
+            request.setAttribute("title", actionInfo.getTitle());
 
-            // 동기에서 데이터 전달없이 바로가기
-            // 동기에서 데이터 전달을 통해 이동
-            if (actinInfo.isRedirect()) {
-                response.sendRedirect(actinInfo.getPath());
-            } else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(actinInfo.getPath());
-                dispatcher.forward(request, response);
-            }
+            WebUtils.handleResponse(request, response, actionInfo);
 
+        } catch (RuntimeException | ClassNotFoundException | InstantiationException | IllegalAccessException rcil) {
+            System.out.println(String.format("[ERROR] RuntimeException | ClassNotFoundException | InstantiationException | IllegalAccessException : %s", rcil.getMessage()));
+            WebUtils.handleError(request, response);
         } catch (Exception e) {
-            System.out.println(String.format("[ERROR] 서블릿 컨테이너 : %s : %s", "Exception", e.getMessage()));
-            WebUtils.writeResponse(response, "오류 발생");
+            System.out.println(String.format("[ERROR] Exception : %s : %s", "Exception", e.getMessage()));
+            WebUtils.handleError(request, response);
         } finally {
             System.out.println(String.format("[END] 서블릿 컨테이너 : %s", "service"));
         }

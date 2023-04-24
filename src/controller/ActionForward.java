@@ -6,19 +6,13 @@ public class ActionForward implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private boolean redirect = false;
+    private boolean isRedirect = false;
     private String path = "";
-    private String urlNama = null;
+    private String urlName = null;
     private String className = null;
     private Object returnData = null;
-
-    public boolean isRedirect() {
-        return redirect;
-    }
-
-    public void setRedirect(boolean redirect) {
-        this.redirect = redirect;
-    }
+    private String title = null;
+    private boolean isJson = false;
 
     public String getPath() {
         return path;
@@ -28,12 +22,12 @@ public class ActionForward implements Serializable {
         this.path = path;
     }
 
-    public String getUrlNama() {
-        return urlNama;
+    public String getUrlName() {
+        return urlName;
     }
 
-    public void setUrlNama(String urlNama) {
-        this.urlNama = urlNama;
+    public void setUrlName(String urlName) {
+        this.urlName = urlName;
     }
 
     public String getClassName() {
@@ -52,9 +46,40 @@ public class ActionForward implements Serializable {
         this.returnData = returnData;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isJson() {
+        return isJson;
+    }
+
+    public void setJson(boolean json) {
+        isJson = json;
+    }
+
+    public boolean isRedirect() {
+        return isRedirect;
+    }
+
+    public void setRedirect(boolean redirect) {
+        isRedirect = redirect;
+    }
+
     @Override
     public String toString() {
-        return "ActionForward [redirect=" + redirect + ", path=" + path + ", urlNama=" + urlNama + ", className="
-                + className + ", returnData=" + returnData + "]";
+        return "ActionForward{" +
+                "isRedirect=" + isRedirect +
+                ", path='" + path + '\'' +
+                ", urlName='" + urlName + '\'' +
+                ", className='" + className + '\'' +
+                ", returnData=" + returnData +
+                ", title='" + title + '\'' +
+                ", isJson=" + isJson +
+                '}';
     }
 }

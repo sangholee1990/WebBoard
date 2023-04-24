@@ -60,7 +60,7 @@
                             <tr>
                                 <td>${boardAttr.bno}</td>
                                 <td>
-                                    <a href="/content.do?bno=${boardAttr.bno}">
+                                    <a href="/java/content.do?bno=${boardAttr.bno}">
                                         <c:out value="${boardAttr.btitle}" default="제목 없음"/>
                                     </a>
                                 </td>
@@ -79,7 +79,7 @@
                     <tr>
                         <td colspan="4">
                             <input type="button" class="btn btn-primary float-end" value="등록"
-                                   onclick="location='/insert.do';"/>
+                                   onclick="location='/java/insert.do';"/>
                         </td>
                     </tr>
                     </tfoot>
