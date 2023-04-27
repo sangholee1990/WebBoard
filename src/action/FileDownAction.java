@@ -85,7 +85,7 @@ public class FileDownAction implements Action {
         mapData.put("fileName", fileInfo.getName());
         mapData.put("fileCont", base64EncodedFileContent);
 
-        System.out.println(String.format("[CHECK] fileName %s", fileInfo.getName()));
+        System.out.println(String.format("[CHECK] fileName : %s", fileInfo.getName()));
         WebUtils.writeJsonResponse(response, mapData);
     }
 }
