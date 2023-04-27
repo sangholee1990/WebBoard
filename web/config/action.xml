@@ -16,8 +16,8 @@
 
     <!--AJAX 데이터 전달-->
 <!--    <action title="목록" urlName="/ajax/list.do" className="action.ListAction" path="/view/ajax/list.jsp"/>-->
-    <action title="목록" urlName="/json/list.do" className="action.ListAction" path="/view/json/list.jsp"/>
     <action title="목록" urlName="/ajax/list.do" className="action.ListAction" path="/view/ajax/list.jsp" isRedirect="true"/>
+    <action title="목록" urlName="/json/list.do" className="action.ListAction" path=""/>
 
 <!--    파일 업로드 -->
     <action title="파일 업로드" urlName="/static/fileUpload.do" className="action.ListAction" path="/view/static/fileUpload.jsp" isRedirect="true"/>
@@ -25,6 +25,7 @@
 
     <!--    파일 관련 -->
     <action title="파일 다운로드" urlName="/static/fileDown.do" className="action.LicstAction" path="/view/static/fileDown.jsp" isRedirect="true"/>
-    <action title="파일 목록" urlName="/json/fileList.do" className="action.FileListAction" path="" isRedirect="false"/>
-    <action title="파일 압축" urlName="/json/fileComp.do" className="action.FileCompAction" path="" isRediret="false"/>
+    <action title="파일 다운로드" urlName="/json/fileDown.do" className="action.FileDownAction" path=""/>
+    <action title="파일 목록" urlName="/json/fileList.do" className="action.FileListAction" path=""/>
+    <action title="파일 압축" urlName="/json/fileComp.do" className="action.FileCompAction" path=""/>
 </action-mapping>

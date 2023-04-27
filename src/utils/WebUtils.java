@@ -95,6 +95,7 @@ public class WebUtils {
 
         try (PrintWriter out = response.getWriter()) {
             out.print(gson.toJson(mapData));
+            out.flush();
         }
     }
 

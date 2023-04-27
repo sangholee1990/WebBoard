@@ -1,4 +1,5 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" isThreadSafe="true" %>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"
+        isThreadSafe="true" %>
 
 <%@ include file="/view/template/taglib.jsp" %>
 
@@ -28,15 +29,21 @@
                     {field: 'name', title: '파일명', width: "60%", align: 'left'},
                     {field: 'size', title: '파일크기', width: "10%", align: 'center'},
                     {
-                        field: 'action', title: '비동기 다운로드', width: "15%", align: 'center',
+                        field: 'WEB ajax', title: 'WEB ajax', width: "10%", align: 'center',
                         formatter: function (value, row, index) {
-                            return '<button class="btn-download" onclick="downFile(\'' + row.name + '\')">다운로드</button>';
+                            return '<button class="btn-download" onclick="downFile(\'' + row.name + '\')">다운</button>';
                         }
                     },
                     {
-                        field: 'action', title: '동기 다운로드', width: "15%", align: 'center',
+                        field: 'WEB a링크', title: 'WEB a링크', width: "10%", align: 'center',
                         formatter: function (value, row, index) {
-                            return '<a class="btn-download" href="/upload/' + encodeURIComponent(row.name) + '">다운로드</a>';
+                            return '<a class="btn-download" download="' + row.name + '" href="/upload/' + encodeURIComponent(row.name) + '">다운</a>';
+                        }
+                    },
+                    {
+                        field: 'WAS base64', title: 'WAS base64', width: "10%", align: 'center',
+                        formatter: function (value, row, index) {
+                            return '<button class="btn-download" onclick="downBase64(\'' + row.name + '\')">다운</button>';
                         }
                     }
                 ]]
@@ -61,7 +68,7 @@
                         // 파일 다운로드
                         downFile(response.fileName);
                     },
-                     error: function (xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('압축 처리 중 오류가 발생했습니다.');
                         console.error(xhr, status, error);
                     }
@@ -77,11 +84,33 @@
                 xhrFields: {
                     responseType: 'blob' // 서버가 binary 데이터를 응답할 경우, responseType을 blob으로 설정하여 다운로드 가능한 형태로 변환
                 },
-                success: function (blob) {
+                success: function (response) {
                     var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
+                    link.href = window.URL.createObjectURL(response);
                     link.download = fileName;
                     link.click();
+                },
+                error: function (xhr, status, error) {
+                    // 에러 처리
+                    console.error(error);
+                }
+            });
+        }
+
+        function downBase64(fileName) {
+            $.ajax({
+                url: '/json/fileDown.do',
+                type: 'GET',
+                contentType: 'application/json',
+                data: {
+                    "fileName": fileName
+                },
+                success: function (response) {
+                    var base64Data = response.fileCont;
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = 'data:application/octet-stream;base64,' + base64Data;
+                    downloadLink.download = response.fileName;
+                    downloadLink.click();
                 },
                 error: function (xhr, status, error) {
                     // 에러 처리
