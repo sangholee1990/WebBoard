@@ -18,23 +18,9 @@ import controller.ActionForward;
 public class WebUtils {
 
     public static void main(String[] args) {
-        Map<String, Object> mapData = new HashMap<>();
-
-        mapData.put("error", "오류 발생");
-
-        //
-        Gson gson = new Gson();
-        System.out.println(mapData);
-        System.out.println(gson.toJson(mapData));
-
-//        response.setContentType("application/json");
-
-//        try (PrintWriter out = response.getWriter()) {
-//            String json = gson.toJson(mapData).toString();
-//            out.print(gson.toJson(mapData));
-//        }
-
     }
+
+    private static final Gson gson = new Gson();
 
     public static void writeResponse(HttpServletRequest request, HttpServletResponse response) {
 
@@ -105,8 +91,6 @@ public class WebUtils {
     }
 
     public static void writeJsonResponse(HttpServletResponse response, Map<String, Object> mapData) throws IOException {
-
-        Gson gson = new Gson();
         response.setContentType("application/json");
 
         try (PrintWriter out = response.getWriter()) {

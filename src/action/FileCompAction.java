@@ -30,25 +30,31 @@ public class FileCompAction implements Action {
     private static final String UPLOAD_PATH = "upload";
 
     public static void main(String[] args) {
-//        List<String> fileNames = Arrays.asList("file1.txt", "file2.txt", "file3.txt");
+    }
 
-//        String uploadPath = request.getSession().getServletContext().getRealPath(UPLOAD_PATH);
-        String uploadPath = "C:\\dev\\workspace\\01.CodeReview\\WebBoard\\classes\\artifacts\\WebBoard_war_exploded\\upload";
-        String dtYmdHms =  LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response, ActionForward action) throws Exception {
+
+        Map<String, Object> resData = new HashMap<>();
+
+        String uploadPath = request.getSession().getServletContext().getRealPath(UPLOAD_PATH);
+        String dtYmdHms = LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         FileListAction flAction = new FileListAction();
 
-        List<File> fileList = null;
-        try {
-            fileList = flAction.getFileList(uploadPath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(fileList);
-        compressFiles(fileList, String.format("%s/%s_%s", uploadPath, dtYmdHms, "combined.zip"));
+        List<File> fileList = flAction.getFileList(uploadPath);
+        String comFileInfo = String.format("%s/%s_%s_%s.zip", uploadPath, dtYmdHms, "compression", fileList.size());
+
+        compressFiles(fileList, comFileInfo);
+
+        resData.put("size", fileList.size());
+        resData.put("fileName", new File(comFileInfo).getName());
+
+        System.out.println(String.format("[CHECK] resData %s", resData));
+        WebUtils.writeJsonResponse(response, resData);
     }
 
-    private static void compressFiles(List<File> files, String outputZipFile) {
+    private static void compressFiles(List<File> files, String outputZipFile) throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         try (FileOutputStream fos = new FileOutputStream(outputZipFile);
@@ -70,10 +76,9 @@ public class FileCompAction implements Action {
                 task.get();
             }
 
-            System.out.println("All files compressed into " + outputZipFile);
-
-        } catch (IOException | InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException | ExecutionException iie) {
+            System.out.println(String.format("[ERROR] IOException | InterruptedException | ExecutionException : %s", iie.getMessage()));
+            throw new Exception(String.format("[ERROR] IOException | InterruptedException | ExecutionException : %s", iie.getMessage()));
         } finally {
             executor.shutdown();
         }
@@ -93,35 +98,6 @@ public class FileCompAction implements Action {
             }
 
             zos.closeEntry();
-            System.out.println("File added to zip: " + file.getName());
         }
-    }
-
-    @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response, ActionForward action) throws Exception {
-
-        List<Map<String, Object>> resMapList = new ArrayList<>();
-        Map<String, Object> resData = new HashMap<>();
-
-        String uploadPath = request.getSession().getServletContext().getRealPath(UPLOAD_PATH);
-
-        List<File> fileList = Files.walk(Paths.get(uploadPath))
-                .parallel()
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .collect(Collectors.toList());
-
-        // 각 파일에 대해 이름과 크기를 리스트에 추가합니다.
-        for (File fileInfo : fileList) {
-            Map<String, Object> mapData = new HashMap<>();
-            mapData.put("name", fileInfo.getName());
-            mapData.put("size", new DecimalFormat("#.##").format(fileInfo.length() / 1024.0 / 1024.0) + " MB");
-            resMapList.add(mapData);
-        }
-
-        resData.put("total", fileList.size());
-        resData.put("rows", resMapList);
-
-        WebUtils.writeJsonResponse(response, resData);
     }
 }

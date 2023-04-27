@@ -79,20 +79,6 @@
                     <br>
                     <button type="submit" class="btn btn-primary float-end">업로드</button>
                 </form>
-
-<%--                <table id="dg" title="Files" class="easyui-datagrid" style="width:700px;height:250px"--%>
-<%--                       url="get_files.jsp"--%>
-<%--                       toolbar="#toolbar" pagination="true"--%>
-<%--                       rownumbers="true" fitColumns="true" singleSelect="true">--%>
-<%--                    <thead>--%>
-<%--                    <tr>--%>
-<%--                        <th field="name" width="50">File Name</th>--%>
-<%--                        <th field="size" width="50">Size</th>--%>
-<%--                        <th field="date" width="50">Upload Date</th>--%>
-<%--                        <th field="action" width="50" formatter="formatActions">Actions</th>--%>
-<%--                    </tr>--%>
-<%--                    </thead>--%>
-<%--                </table>--%>
             </div>
         </div>
     </div>
